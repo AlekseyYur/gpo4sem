@@ -1,15 +1,20 @@
 ﻿using BlazorApp3.Model.Operation;
+using System.Threading.Tasks;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlazorApp3.Model
 {
     public class ApplicationUser
 	{
-		private string _login;
 		private List<Purchase> _purchases;
 		private List<Accrual> _accruals;
 		public List<Purchase> Purchases { get { return _purchases; } set { _purchases = value; } }
 		public List<Accrual> Accruals { get { return _accruals; } set { _accruals = value; } }
-		public string Login { get { return _login; }  set { _login = value; } }
+
+		[Required]
+		public string Login { get; set; }
+
 		public float Purchase_Amount(DateTime begin, DateTime end)
 		{
 			float total = 0;
@@ -41,6 +46,15 @@ namespace BlazorApp3.Model
 		public ApplicationUser()
 		{
 
+			Purchases = new List<Purchase>();
+			Accruals = new List<Accrual>();
+			Login = "";
+
+		}
+
+		public ApplicationUser(string login)
+		{
+			Login = Login;
 			Purchases = new List<Purchase>();
 			Accruals = new List<Accrual>();
 		}
