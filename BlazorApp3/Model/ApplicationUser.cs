@@ -54,7 +54,7 @@ namespace BlazorApp3.Model
 
 		public ApplicationUser(string login)
 		{
-			Login = Login;
+			Login = login;
 			Purchases = new List<Purchase>();
 			Accruals = new List<Accrual>();
 		}

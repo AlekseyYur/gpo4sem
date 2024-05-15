@@ -1,5 +1,5 @@
 ﻿@page "/users"
-
+@rendermode InteractiveServer
 @using BlazorApp3.Model
 
 
@@ -14,7 +14,7 @@
 
 <div class="row">
 	<div class="col">
-		<EditForm Model="newUser" OnSubmit="addUser" FormName="AddUser">
+		<EditForm Model="@newUser" OnSubmit="addUser" >
 			<div class="form-group">
 				<label>Login:</label>
 				<InputText class="form-control" @bind-Value="newUser!.Login" />
@@ -27,14 +27,14 @@
 
 
 @code {
-	ApplicationUser newUser;
+	ApplicationUser newUser = new();
 
-	protected override void OnInitialized() => newUser ??= new();
+
 
 	void addUser()
 	{
 		Console.WriteLine(newUser.Login);
-		UserStorage.Users.Add(newUser);
+			UserStorage.Users.Add(new ApplicationUser(newUser.Login));
 	}
 
 
