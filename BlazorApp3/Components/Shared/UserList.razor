@@ -1,0 +1,40 @@
+﻿<h3>UserList</h3>
+
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead class="thead-light">
+			<tr>
+				<th>Login</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (UserStorage.Users == null || UserStorage.Users.Count == 0)
+			{
+				<tr>No Users</tr>
+			}
+
+			@foreach (var user in UserStorage.Users)
+			{
+				<tr>
+					<td>@user.Login</td>
+					<td>@user.total(MounthAgo, today)</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+@code {
+	DateTime today;
+	DateTime MounthAgo;
+
+	protected async override Task OnInitializedAsync()
+	{
+		today = DateTime.Today;
+		MounthAgo = today.AddMonths(-1);
+
+	}
+
+}
