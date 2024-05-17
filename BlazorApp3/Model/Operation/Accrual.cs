@@ -3,16 +3,23 @@
     public class Accrual
     {
         private readonly int _id;
-        private readonly int _price;
+        private  float _price;
         private string _from;
 
         private readonly DateTime _datetime;
-        public int Price { get { return _price; } }
-        public string From { get { return _from; } }
-
+        public float Price { get { return _price; } }
+        public string From { get { return _from; }  set { _from = value; } }
+        public string SPrice
+        {
+            get { return _price.ToString(); }
+            set
+            {
+                _price = float.Parse(value);
+            }
+        }
         public int Id { get { return _id; } }
         public DateTime DateTime { get { return _datetime; } }
-        public Accrual(string sender, int price)
+        public Accrual(string sender, float price)
         {
             _price = price;
             _from = sender;
