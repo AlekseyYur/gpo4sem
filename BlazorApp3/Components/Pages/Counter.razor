@@ -1,19 +1,42 @@
 ﻿@page "/counter"
 @rendermode InteractiveServer
+@using BlazorApp3.Model
+@using BlazorApp3.Model.Operation
+@using BlazorApp3.Model.Categories
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<InputSelect @bind-Value:get="login" @bind-Value:set="SetSelected">
+    <option value=""></option>
+    @for (int x=0;x< UserStorage.Users.Count; x++)
+    {
+        <option value="@UserStorage.Users[x].Login">@UserStorage.Users[@x].Login</option>
+    }
+</InputSelect>
 
 @code {
     private int currentCount = 0;
-
+    string login=null;
+    ApplicationUser SelectedPerson;
+    List<ApplicationUser> list;
     private void IncrementCount()
     {
-        currentCount++;
+        list = UserStorage.Users;
+        SelectedPerson.Purchases.Add(new Purchase("Yarche", 145, (Category)1));
+        int count = UserStorage.Users[0].Purchases.Count();
+
+    }
+    void SetSelected(string value)
+    {
+        if (value != "" & UserStorage.Users.Count!=0)
+        {
+            SelectedPerson = UserStorage.Users.Find(e=>e.Login==value);
+            login = value;
+        }
     }
 }

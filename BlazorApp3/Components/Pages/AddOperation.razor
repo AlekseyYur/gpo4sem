@@ -1,0 +1,117 @@
+﻿@page "/AddOperation"
+@rendermode InteractiveServer
+@using BlazorApp3.Model
+@using BlazorApp3.Model.Operation
+@using BlazorApp3.Model.Categories
+<InputSelect @bind-Value:get="login" @bind-Value:set="SetSelected">
+    <option value=""></option>
+    @for (int x = 0; x < UserStorage.Users.Count; x++)
+    {
+        <option value="@UserStorage.Users[x].Login">@UserStorage.Users[@x].Login</option>
+    }
+
+</InputSelect>
+<InputSelect @bind-Value:get="choice"@bind-Value:set="SetSelectedOperation">
+    <option value=""></option>
+    <option value="1">Purchase</option>
+    <option value="2">Accrual</option>
+</InputSelect>
+@if (choice == 1)
+{
+    <div class="row">
+        <div class="col">
+            <InputSelect @bind-Value:get="id" @bind-Value:set="SetSelectedId">
+                <option value="-1"></option>
+                @foreach (Category cat in Enum.GetValues(typeof(Category)))
+                {
+                    <option value="@((int)cat)">@cat</option>
+                }
+            </InputSelect>
+            <EditForm Model="newPurchase" OnValidSubmit="addOperaion">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <InputText class="form-control" @bind-Value="newPurchase.Shop_Name" />
+                </div>
+                <div class="form-group">
+                    \
+                    <label>Cost:</label>
+                    <InputText class="form-control" @bind-Value="newPurchase.SPrice" />
+                </div>
+
+                <button type="submit"> Add</button>
+
+            </EditForm>
+
+            
+
+
+        </div>
+    </div>
+}
+@if (choice == 2)
+{
+    <div class="row">
+        <div class="col">
+            <EditForm Model="newAccrual" OnValidSubmit="addOperaion">
+                <div class="form-group">
+                    <label>From Who:</label>
+                    <InputText class="form-control" @bind-Value=" newAccrual.From" />
+                </div>
+                <div class="form-group">
+                    
+                    <label>Cost:</label>
+                    <InputText class="form-control" @bind-Value=" newAccrual.SPrice" />
+                </div>
+                <button type="submit"> Add</button>
+
+            </EditForm>
+        </div>
+    </div>
+}
+
+@code {
+    Purchase newPurchase = new();
+    Accrual newAccrual = new();
+    int id=-1;
+    private int currentCount = 0;
+    string login = null;
+    int choice=0;
+    ApplicationUser SelectedPerson = new();
+    List<ApplicationUser> list = UserStorage.Users;
+    void SetSelected(string value)
+    {
+        if (value != "" & UserStorage.Users.Count != 0)
+        {
+            SelectedPerson = UserStorage.Users.Find(e => e.Login == value);
+            login = value;
+        }
+    }
+
+    void SetSelectedOperation(int value)
+    {
+        if (value !=null)
+        {
+            choice = value;
+        }
+    }
+    void SetSelectedId(int value)
+    {
+        
+            id = value;
+        
+    }
+    void addOperaion()
+    {
+        if (id != -1 & choice!=0 & login!="")
+        {
+            if (choice == 1)
+            {
+                SelectedPerson.Purchases.Add(new Purchase(newPurchase.Shop_Name, newPurchase.Price, (Category)id));
+            }
+            if (choice == 2)
+            {
+                SelectedPerson.Accruals.Add(new Accrual(newAccrual.From, newAccrual.Price));
+            }
+        }
+    }
+}

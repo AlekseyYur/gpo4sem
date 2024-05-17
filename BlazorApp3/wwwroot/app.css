@@ -49,3 +49,199 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+.right_menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    left: 17px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    width: 483px;
+    background-color: #61c4b7;
+}
+
+.right_menu__container {
+    background-color: #4ff09d86;
+    border: 0.5px;
+    border-color: #FFB852;
+    width: 456px;
+    height: 1029px;
+    -ms-flex-item-align: center;
+    align-self: center;
+}
+
+.right_menu__list-label {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 492px;
+    -ms-flex-item-align: center;
+    align-self: center;
+    height: 57px;
+    position: relative;
+    background-color: #48F089;
+    right: 20px;
+    color: #A66508;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+}
+
+.right_menu__list-item {
+    width: 407px;
+    height: 47px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    gap: 130px;
+    margin: 10px 25px;
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.right_menu__list-item-name,
+.right_menu__list-item-price {
+    color: #A66508;
+    padding: 5px 10px;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.left_menu {
+    -ms-flex-item-align: right;
+    align-self: right;
+    width: 154px;
+    height: 1080px;
+    right: 9px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background: #61c4b7;
+    gap: 258px;
+}
+
+.left_menu__cube_button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    gap: 21px;
+    margin: 14px;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+
+.left_menu__cube_button {
+    width: 52px;
+    height: 52px;
+    background-color: #48F089;
+    border-color: #84F048;
+    border: 1px;
+}
+
+.left_menu__cube_button_icon {
+    width: 52px;
+    height: 52px;
+}
+
+.left_menu__button-container {
+    z-index: 2;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+    gap: 78px;
+}
+
+.left_menu__period_button {
+    background-color: #48F089;
+    position: relative;
+    border: none;
+    color: #A66508;
+    font-weight: 600;
+    height: 24px;
+    width: 137px;
+    z-index: 2;
+    left: 9px;
+}
+
+.bottom_menu {
+    position: relative;
+    bottom: 0;
+    height: 255px;
+    width: 1253px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    top: 825px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #61c4b7;
+    left: 9px;
+}
+
+.bottom_menu__buy-info {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    right: 5px;
+    z-index: 4;
+    bottom: 16px;
+    height: 67px;
+    width: 475px;
+    color: #A66508;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    padding: 15px;
+    background-color: #48F089;
+}
+
+.bottom_menu__buy-text {
+    background-color: #4ff09d86;
+    margin: 20px;
+    position: absolute;
+    -ms-flex-item-align: center;
+    align-self: center;
+    height: 213px;
+    width: 1224px;
+}
+
+.main {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    width: 1920px;
+    height: 1080px;
+    background-color: #DCF1DD;
+    zoom: 79%;
+}
