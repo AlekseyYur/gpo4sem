@@ -14,8 +14,9 @@ namespace BlazorApp3.Model
 		/// <param name="user">Проверяемый пользователь</param>
 		/// <param name="category">Категория трат</param>
 		/// <returns>Предупреждающее сообщение</returns>
-		public static string Deviation_Message(ApplicationUser user, Category category)
+		public static string Deviation_Message(ApplicationUser user, Category category, bool relatively)
 		{
+			// Нормированное отклонение
 			double T = 0;
 
 			// Коофицент допускаемых нормированных отклонений
@@ -24,8 +25,15 @@ namespace BlazorApp3.Model
 			DateTime today = DateTime.Today;
 			DateTime MounthAgo = today.AddMonths(-1);
 
-			// Нормированное отклонение
-			T = (user.Purchase_Amount_Category(MounthAgo, today, category) - Average(category)) / Standard_Deviation(category);
+			if (!relatively)
+			{
+				T = (user.Purchase_Amount_Category(MounthAgo, today, category) - Average(category)) / Standard_Deviation(category);
+			}
+			else
+			{
+				T = (user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today) - Average_Relatively(category)) / Standard_Deviation_Relatively(category);
+			}
+			
 
 			switch (T)
 			{
@@ -64,7 +72,32 @@ namespace BlazorApp3.Model
 		}
 
 		/// <summary>
-		/// Возвращает среднеквадратичное отклонение
+		/// Возвращает средние траты всех пользователей по категориям за последний месяц относительно всех трат
+		/// </summary>
+		/// <param name="category">категория трат</param>
+		/// <returns>Среднее значение</returns>
+		public static float Average_Relatively(Category category)
+		{
+			float average = 0;
+			float i = 0;
+
+			DateTime today = DateTime.Today;
+			DateTime MounthAgo = today.AddMonths(-1);
+
+			foreach (var user in Users)
+			{
+				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				{
+					average += user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today);
+					i++;
+				}
+			}
+
+			return average / i;
+		}
+
+		/// <summary>
+		/// Возвращает среднеквадратичное отклонение трат пользователей по категории
 		/// </summary>
 		/// <param name="category">Категория трат</param>
 		/// <returns>Среднеквадратичное отклонение</returns>
@@ -84,6 +117,34 @@ namespace BlazorApp3.Model
 				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
 				{
 					S += (float)Math.Pow(user.Purchase_Amount_Category(MounthAgo, today, category) - average, 2);
+					i++;
+				}
+			}
+
+			return (float)Math.Sqrt(S) / i;
+		}
+
+		/// <summary>
+		/// Возвращает среднеквадратичное отклонение трат пользователей по категории относительно всех трат
+		/// </summary>
+		/// <param name="category">Категория трат</param>
+		/// <returns>Среднеквадратичное отклонение</returns>
+		public static float Standard_Deviation_Relatively(Category category)
+		{
+			int i = 0;
+			float S = 0;
+			float average = Average_Relatively(category);
+
+			DateTime today = DateTime.Today;
+			DateTime MounthAgo = today.AddMonths(-1);
+
+			i--;
+
+			foreach (var user in Users)
+			{
+				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				{
+					S += (float)Math.Pow(user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today) - average, 2);
 					i++;
 				}
 			}
