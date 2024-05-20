@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using BlazorApp3.Model.Categories;
 
 namespace BlazorApp3.Model
 {
@@ -25,6 +26,18 @@ namespace BlazorApp3.Model
 			foreach (var purchase in Purchases)
 			{
 				if (purchase.DateTime < end & purchase.DateTime > begin)
+				{
+					total += purchase.Price;
+				}
+			}
+			return total;
+		}
+		public float Purchase_Amount_Category(DateTime begin, DateTime end, Category category)
+		{
+			float total = 0;
+			foreach (var purchase in Purchases)
+			{
+				if (purchase.DateTime < end & purchase.DateTime > begin & purchase.Category == category)
 				{
 					total += purchase.Price;
 				}
