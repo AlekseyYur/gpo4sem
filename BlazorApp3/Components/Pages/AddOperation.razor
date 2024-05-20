@@ -34,10 +34,12 @@
                 <button type="submit"> Add</button>
 
             </EditForm>
-
-            
-
-
+            <div class="col">
+                @if (message is not null)
+                {
+                    <div class="@cssClass text-center">@message</div>
+                }
+            </div>      
         </div>
     </div>
 }
@@ -68,10 +70,14 @@
     int id=-1;
     private int currentCount = 0;
     string login = null;
-    int choice=0;
+    int choice=1;
     ApplicationUser SelectedPerson = new();
     List<ApplicationUser> list = UserStorage.Users;
-  
+
+    //Сообщение об ошибке
+    string message = String.Empty;
+    string cssClass = String.Empty;
+
 
     void SetSelectedOperation(int value)
     {
@@ -82,12 +88,47 @@
     }
     void SetSelectedId(int value)
     {
-        
-            id = value;
-        
+
+        id = value;
+
     }
     void addOperaion()
     {
+        //Валидация
+        if (id == -1) // Категория
+        {
+            message = "Категория не выбрана";
+            cssClass = "alert alert-danger";
+            return;
+        }
+        else if (UserStorage.CurrentUser == null) //Пользователь
+        {
+            message = "Пользователь не выбран";
+            cssClass = "alert alert-danger";
+            return;
+        }
+        else if ( //Цена
+            choice == 1 && (newPurchase.Price <= 0 || newPurchase.Price == null) || 
+            choice == 2 && (newAccrual.Price <= 0 || newAccrual.Price == null))
+        {
+            message = "Неверная сумма";
+            cssClass = "alert alert-danger";
+            return;
+        }
+        else if ( //Имя
+            choice == 1 && (newPurchase.Shop_Name == null || newPurchase.Shop_Name == "") ||
+            choice == 2 && (newAccrual.From == null || newAccrual.From == ""))
+        {
+            message = "Неверная название";
+            cssClass = "alert alert-danger";
+            return;
+        }
+        else
+        {
+            message = null;
+            cssClass = "alert alert-success";
+        }
+
         if (id != -1 & choice!=0 & login!="")
         {
             if (choice == 1)
