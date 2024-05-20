@@ -1,0 +1,32 @@
+﻿.Chart-container {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    position: relative;
+}
+
+.Chart-container__list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top:-10px;
+    align-self: center;
+    gap: 12px;
+}
+
+.Chart-container__list-member {
+    height: 10px;
+}
+.total {
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-self:center;
+}
+.amountRED{
+    color:red;
+}
+.Center_menu {
+    display: flex;
+    flex-direction:column;
+}
