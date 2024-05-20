@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using BlazorApp3.Model.Categories;
+using BlazorApp3.Components.Pages;
 
 namespace BlazorApp3.Model
 {
@@ -12,7 +13,18 @@ namespace BlazorApp3.Model
 		private List<Accrual> _accruals;
 		public List<Purchase> Purchases { get { return _purchases; } set { _purchases = value; } }
 		public List<Accrual> Accruals { get { return _accruals; } set { _accruals = value; } }
+
 		private float _purchase_limit;
+
+		/// <summary>
+		/// Список настроек категорий по отображению разброса от нормы
+		/// </summary>
+		private List<bool> _isAbsolute = new();
+		public List<bool> IsAbsolute
+		{
+			get	{ return _isAbsolute; }
+			set { _isAbsolute = value; }
+		}
 
 
 		[Required]
@@ -32,6 +44,14 @@ namespace BlazorApp3.Model
 			}
 			return total;
 		}
+
+		/// <summary>
+		/// Траты за переод по категории
+		/// </summary>
+		/// <param name="begin">Начало переода</param>
+		/// <param name="end">Конец переода</param>
+		/// <param name="category">Категория</param>
+		/// <returns>Сумма трат</returns>
 		public float Purchase_Amount_Category(DateTime begin, DateTime end, Category category)
 		{
 			float total = 0;
@@ -44,6 +64,34 @@ namespace BlazorApp3.Model
 			}
 			return total;
 		}
+
+
+		/// <summary>
+		/// Траты за месяц по категории
+		/// </summary>
+		/// <param name="category"></param>
+		/// <returns></returns>
+		public float Purchase_Amount_Category_ByMouth(Category category)
+		{
+			DateTime today = DateTime.UtcNow;
+			DateTime MounthAgo = today.AddMonths(-1);
+
+			return Purchase_Amount_Category(MounthAgo, today, category);
+		}
+
+		/// <summary>
+		/// Траты за месяц
+		/// </summary>
+		/// <returns></returns>
+		public float Purchase_Amount_ByMouth()
+		{
+			DateTime today = DateTime.UtcNow;
+			DateTime MounthAgo = today.AddMonths(-1);
+
+			return Purchase_Amount(MounthAgo, today);
+		}
+
+
 		public float Accrual_Amount(DateTime begin, DateTime end)
 		{
 			float total = 0;
@@ -66,6 +114,10 @@ namespace BlazorApp3.Model
 			Purchases = new List<Purchase>();
 			Accruals = new List<Accrual>();
 			Login = "";
+			foreach (Category cat in Enum.GetValues(typeof(Category)))
+			{
+				IsAbsolute.Add(false);
+			}
 
 		}
 
@@ -76,6 +128,10 @@ namespace BlazorApp3.Model
             Purchase_Limit = 1000;
             Purchases = new List<Purchase>();
 			Accruals = new List<Accrual>();
+			foreach (Category cat in Enum.GetValues(typeof(Category)))
+			{
+				IsAbsolute.Add(false);
+			}
 		}
 
 	}

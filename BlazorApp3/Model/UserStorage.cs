@@ -25,27 +25,24 @@ namespace BlazorApp3.Model
 			// Коофицент допускаемых нормированных отклонений
 			const double T_gr = 2.5;
 
-			DateTime today = DateTime.Today;
-			DateTime MounthAgo = today.AddMonths(-1);
-
 			if (!relatively)
 			{
-				T = (user.Purchase_Amount_Category(MounthAgo, today, category) - Average(category)) / Standard_Deviation(category);
+				T = (user.Purchase_Amount_Category_ByMouth(category) - Average(category)) / Standard_Deviation(category);
 			}
 			else
 			{
-				T = (user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today) - Average_Relatively(category)) / Standard_Deviation_Relatively(category);
+				T = (user.Purchase_Amount_Category_ByMouth(category) / user.Purchase_Amount_ByMouth() - Average_Relatively(category)) / Standard_Deviation_Relatively(category);
 			}
 			
 
 			switch (T)
 			{
 				case (< -T_gr) when Importance_Category(category) > 0:
-					return "You are spending too little on this category";
+					return "Вы тратите слишком мало для данной категории";
 				case (> T_gr) when Importance_Category(category) < 0:
-					return "You are spending too much on this category";
+					return "Вы тратите слишком много для данной категории";
 				default:
-					return "";
+					return "Траты в пределах нормы";
 			}
 		}
 
@@ -59,14 +56,11 @@ namespace BlazorApp3.Model
 			float average = 0;
 			float i = 0;
 
-			DateTime today = DateTime.Today;
-			DateTime MounthAgo = today.AddMonths(-1);
-
 			foreach (var user in Users)
 			{
-				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				if (user.Purchase_Amount_Category_ByMouth(category) != 0)
 				{
-					average += user.Purchase_Amount_Category(MounthAgo, today, category);
+					average += user.Purchase_Amount_Category_ByMouth(category);
 					i++;
 				}
 			}
@@ -84,14 +78,11 @@ namespace BlazorApp3.Model
 			float average = 0;
 			float i = 0;
 
-			DateTime today = DateTime.Today;
-			DateTime MounthAgo = today.AddMonths(-1);
-
 			foreach (var user in Users)
 			{
-				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				if (user.Purchase_Amount_Category_ByMouth(category) != 0)
 				{
-					average += user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today);
+					average += user.Purchase_Amount_Category_ByMouth(category) / user.Purchase_Amount_ByMouth();
 					i++;
 				}
 			}
@@ -110,16 +101,13 @@ namespace BlazorApp3.Model
 			float S = 0;
 			float average = Average(category);
 
-			DateTime today = DateTime.Today;
-			DateTime MounthAgo = today.AddMonths(-1);
-
 			i--;
 
 			foreach (var user in Users)
 			{
-				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				if (user.Purchase_Amount_Category_ByMouth(category) != 0)
 				{
-					S += (float)Math.Pow(user.Purchase_Amount_Category(MounthAgo, today, category) - average, 2);
+					S += (float)Math.Pow(user.Purchase_Amount_Category_ByMouth(category) - average, 2);
 					i++;
 				}
 			}
@@ -138,16 +126,13 @@ namespace BlazorApp3.Model
 			float S = 0;
 			float average = Average_Relatively(category);
 
-			DateTime today = DateTime.Today;
-			DateTime MounthAgo = today.AddMonths(-1);
-
 			i--;
 
 			foreach (var user in Users)
 			{
-				if (user.Purchase_Amount_Category(MounthAgo, today, category) != 0)
+				if (user.Purchase_Amount_Category_ByMouth(category) != 0)
 				{
-					S += (float)Math.Pow(user.Purchase_Amount_Category(MounthAgo, today, category) / user.Purchase_Amount(MounthAgo, today) - average, 2);
+					S += (float)Math.Pow(user.Purchase_Amount_Category_ByMouth(category) / user.Purchase_Amount_ByMouth() - average, 2);
 					i++;
 				}
 			}
@@ -176,8 +161,6 @@ namespace BlazorApp3.Model
 					return 0;
 			}
 		}
-
-
 
 
 	}

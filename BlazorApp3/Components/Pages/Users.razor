@@ -21,7 +21,12 @@
 			</div>
 			<button type="submit">Save</button>
 		</EditForm>
-
+	</div>
+	<div class="col">
+		@if (message is not null)
+		{
+			<div class = "@cssClass text-center">@message</div>
+		}
 	</div>
 </div>
 
@@ -45,6 +50,10 @@
 	string login = null;
 	private UserList List;
 
+	//Сообщение об ошибке
+	string message = String.Empty;
+	string cssClass = String.Empty;
+
 	protected override void OnInitialized()
 	{
 		if (UserStorage.CurrentUser != null)
@@ -54,10 +63,25 @@
 	}
 	void addUser()
 	{
+		//Проверка на повторение
+		foreach (var user in UserStorage.Users)
+		{
+			if (user.Login == newUser.Login )
+			{
+				message = "Такой пользователь уже существует";
+				cssClass = "alert alert-danger";
+				return;
+			}
+		}
+		//Повторений нет
+		message = null;
+		cssClass = "alert alert-success";
+
+
 		Console.WriteLine(newUser.Login);
-			UserStorage.Users.Add(new ApplicationUser(newUser.Login));
-			StateHasChanged();
-			List.Refresh();
+		UserStorage.Users.Add(new ApplicationUser(newUser.Login));
+		StateHasChanged();
+		List.Refresh();
 	}
 	void SetSelected(string value)
 	{

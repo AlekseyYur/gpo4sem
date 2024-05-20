@@ -1,0 +1,31 @@
+﻿<h3>Разброс трат относительно других пользователей</h3>
+
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead class="thead-light">
+			<tr>
+				<th>Категория</th>
+				<th>За последний месяц</th>
+				<th>Расброс</th>
+				<th>В абсолютных значениях</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (Category cat in Enum.GetValues(typeof(Category)))
+			{
+				var i = (int)cat;
+				<tr>
+					<td>@cat.ToString()</td>
+					<td>@UserStorage.CurrentUser.Purchase_Amount_Category_ByMouth(cat)</td>
+					<td>@UserStorage.Deviation_Message(UserStorage.CurrentUser, cat, !UserStorage.CurrentUser.IsAbsolute[i]);</td>
+					<td><InputCheckbox @bind-Value=UserStorage.CurrentUser.IsAbsolute[i] /></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@code {
+
+}
