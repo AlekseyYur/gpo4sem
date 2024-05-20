@@ -12,6 +12,8 @@ namespace BlazorApp3.Model.Operation
         private string _shop_name;
         private readonly Category _category;
         private readonly DateTime _datetime;
+
+
         public string SPrice
         {
             get { return _price.ToString(); }
