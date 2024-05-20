@@ -5,6 +5,8 @@ namespace BlazorApp3.Model.Operation
 {
     public class Purchase
     {
+
+        private static int _id_counter=0;
         private readonly int _id;
         private float _price;
         private string _shop_name;
@@ -35,6 +37,8 @@ namespace BlazorApp3.Model.Operation
         public DateTime DateTime { get { return _datetime; } }
         public Purchase(string shop_name, float price, Category category)
         {
+            _id = _id_counter;
+            _id_counter++;
             Price = price;
             Shop_Name = shop_name;
             _category = category;
