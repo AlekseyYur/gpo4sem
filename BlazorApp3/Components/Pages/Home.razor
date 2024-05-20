@@ -1,13 +1,18 @@
 ﻿@page "/"
 @using BlazorApp3.Components.Pages.Shared
+
 <div class="main">
 	
-
-	<Left_Menu />
-	<Bottom_Menu />
-	<Right_Menu />
-
+	@if (UserStorage.CurrentUser != null)
+	{
+		
+		<Left_Menu />
+		<div class="center-menu">
+			<Center_Menu />
+		</div>
+		<Bottom_Menu />
+		<Right_Menu />
+	}
 	
 </div>
 
-\

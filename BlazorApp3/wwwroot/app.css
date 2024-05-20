@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    
 }
 
 a, .btn-link {
@@ -93,6 +94,7 @@ h1:focus {
 
 .right_menu__list-item {
     width: 407px;
+
     height: 47px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -103,7 +105,7 @@ h1:focus {
     flex-direction: row;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    gap: 130px;
+    
     margin: 10px 25px;
     background-color: rgba(0, 0, 0, 0.04);
 }
@@ -115,23 +117,31 @@ h1:focus {
     font-weight: 600;
     font-size: 30px;
 }
-
-.left_menu {
-    -ms-flex-item-align: right;
-    align-self: right;
-    width: 154px;
-    height: 1080px;
-    right: 9px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    background: #61c4b7;
-    gap: 258px;
+    .right_menu__list-item-price {
+        position:relative;
+        right:0;
+    }
+.right_menu__list-item-name {
+    position: relative;
+   
 }
+
+    .left_menu {
+        -ms-flex-item-align: right;
+        align-self: right;
+        width: 154px;
+        height: 1080px;
+        right: 9px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background: #61c4b7;
+        gap: 258px;
+    }
 
 .left_menu__cube_button-container {
     display: -webkit-box;
@@ -173,7 +183,7 @@ h1:focus {
     display: flex;
     margin-left: auto;
     margin-right: 0;
-    gap: 78px;
+    gap: 58px;
 }
 
 .left_menu__period_button {
@@ -196,7 +206,7 @@ h1:focus {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    top: 825px;
+    top: 120px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -238,10 +248,23 @@ h1:focus {
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
+   
+    flex-direction: column;
+    flex-wrap:wrap;
     width: 1920px;
     height: 1080px;
     background-color: #DCF1DD;
-    zoom: 79%;
+    position:relative;
+    left:-20px;
+    zoom:90%;
+   
+}
+.center-menu{
+    position:relative;
+    top:60px;
+    width:600px;
+    height:600px;
+ 
+    left:250px;
+    
 }

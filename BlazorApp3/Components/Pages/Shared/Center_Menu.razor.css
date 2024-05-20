@@ -1,5 +1,15 @@
-﻿.Chart-container {
+﻿.Center-menu {
     display: flex;
+    flex-direction: column;
+    height: 600px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+
+}
+.Chart-container {
+    display: flex;
+    
     flex-direction: row;
     align-self: center;
     position: relative;
@@ -26,7 +36,4 @@
 .amountRED{
     color:red;
 }
-.Center_menu {
-    display: flex;
-    flex-direction:column;
-}
+
