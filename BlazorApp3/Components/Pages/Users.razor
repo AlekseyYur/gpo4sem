@@ -14,33 +14,61 @@
 
 <div class="row">
 	<div class="col">
-		<EditForm Model="@newUser" OnSubmit="addUser" >
+		<EditForm Model="@newUser" OnSubmit="addUser" FormName="Name" >
 			<div class="form-group">
 				<label>Login:</label>
 				<InputText class="form-control" @bind-Value="newUser!.Login" />
 			</div>
 			<button type="submit">Save</button>
 		</EditForm>
+
 	</div>
 </div>
 
+<InputSelect   @bind-Value:get="login" @bind-Value:set="SetSelected"  >
+	<option value=""></option>
+	@for (int x = 0; x < UserStorage.Users.Count; x++)
+	{
+		<option value="@UserStorage.Users[x].Login">@UserStorage.Users[@x].Login</option>
+	}
+
+</InputSelect>
 
 
-<UserList/>
+<UserList @ref="List"/>
 
 
 
 @code {
+
 	ApplicationUser newUser = new();
+	string login = null;
+	private UserList List;
 
-
-
+	protected override void OnInitialized()
+	{
+		if (UserStorage.CurrentUser != null)
+		{
+			login = UserStorage.CurrentUser.Login;
+		}
+	}
 	void addUser()
 	{
 		Console.WriteLine(newUser.Login);
 			UserStorage.Users.Add(new ApplicationUser(newUser.Login));
+			StateHasChanged();
+			List.Refresh();
 	}
-
+	void SetSelected(string value)
+	{
+		if (value != "" & UserStorage.Users.Count != 0)
+		{
+			UserStorage.CurrentUser = UserStorage.Users.Find(e => e.Login == value);
+			login = value;
+			StateHasChanged();
+			
+		}
+	}
 
 
 }

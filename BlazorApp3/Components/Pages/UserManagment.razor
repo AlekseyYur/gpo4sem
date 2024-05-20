@@ -1,0 +1,25 @@
+﻿@page "/UserManager"
+
+@using BlazorApp3.Model
+<h3>Данные Аккаунта</h3>
+
+@if (UserStorage.CurrentUser != null)
+{
+	
+	<div class="row">
+		<div class="col">
+			<div >Лимит Расходов: @UserStorage.CurrentUser.SPurchase_Limit  </div>
+			<EditForm Model="@UserStorage.CurrentUser"  FormName="Name">
+				<div class="form-group">
+					<label>Установить Лимит:</label>
+					<InputText class="form-control" @bind-Value="UserStorage.CurrentUser.SPurchase_Limit" />
+				</div>
+				<button type="submit">Save</button>
+			</EditForm>
+
+		</div>
+	</div>
+}
+@code {
+	
+}
