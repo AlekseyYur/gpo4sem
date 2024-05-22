@@ -33,11 +33,11 @@
 </div>
 
 @code {
-    public static  Purchase currentItem;
     private void setItem(Purchase item)
     {
-        currentItem = item;
-       
+        UserStorage.currentPurchase = item;
+        
+
     }
 
 }

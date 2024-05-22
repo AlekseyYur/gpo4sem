@@ -1,11 +1,27 @@
 ﻿
 <div class="bottom_menu">
+    @if (UserStorage.currentPurchase != null)
+    {
     <div class="bottom_menu__buy-info">
         Информация о покупке
     </div>
     <div class="bottom_menu__buy-text">
+        <div class="bottom_menu__buy-name">
+            @UserStorage.currentPurchase.Shop_Name
+        </div>
+        <div class="bottom_menu__buy-price">
+            @UserStorage.currentPurchase.Price.ToString()
+        </div>
+        <div class="bottom_menu__buy-category">
+            @UserStorage.currentPurchase.Category.ToString()
+        </div>
+        <div class="bottom_menu__buy-date">
+            @UserStorage.currentPurchase.DateTime.ToString("hh:mm yyyy.MM.dd")
+        </div>
     </div>
+    }
 </div>
 @code {
+    
 
 }
