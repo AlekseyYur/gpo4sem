@@ -104,7 +104,7 @@ namespace BlazorApp3.Model
 			}
 			return total;
 		}
-		public float total(DateTime begin, DateTime end)
+		public float Total(DateTime begin, DateTime end)
 		{
 			return Accrual_Amount(begin, end) - Purchase_Amount(begin, end);
 		}
