@@ -11,6 +11,7 @@ namespace BlazorApp3.Model
 	{
 		private List<Purchase> _purchases;
 		private List<Accrual> _accruals;
+		
 		public List<Purchase> Purchases { get { return _purchases; } set { _purchases = value; } }
 		public List<Accrual> Accruals { get { return _accruals; } set { _accruals = value; } }
 
@@ -30,7 +31,10 @@ namespace BlazorApp3.Model
 		[Required]
 		public string Login { get; set; }
 
-		public float Purchase_Limit { get { return _purchase_limit; } set { _purchase_limit = value; } }
+		public Purchase CurrentPurchase;
+		public DateTime PeriodBegin;
+        public DateTime PeriodEnd;
+        public float Purchase_Limit { get { return _purchase_limit; } set { _purchase_limit = value; } }
 		public string SPurchase_Limit { get { return _purchase_limit.ToString(); } set { _purchase_limit = float.Parse(value); } }
 		public float Purchase_Amount(DateTime begin, DateTime end)
 		{

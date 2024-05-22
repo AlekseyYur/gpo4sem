@@ -15,28 +15,34 @@
     </div>
 
     <div class="left_menu__button-container">
-        <button class="left_menu__period_button" id="js-button-day">
+        <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.Today,DateTime.Today.AddDays(-1)) ">
             За день
         </button>
-
-        <button class="left_menu__period_button" id="js-button-week">
+        
+        <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.Today,DateTime.Today.AddDays(-7))">
             За неделю
         </button>
 
-        <button class="left_menu__period_button" id="js-button-month">
+        <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.Today,DateTime.Today.AddDays(-30))">
             За месяц
         </button>
 
-        <button class="left_menu__period_button" id="js-button-year">
+        <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.Today,DateTime.Today.AddDays(-365))">
             За год
         </button>
 
-        <button class="left_menu__period_button" id="js-button-all">
+        <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.MinValue,DateTime.MaxValue)">
             За все время
         </button>
     </div>
 </div>
 
 @code {
-
+    public static DateTime Period_Begin;
+    public static DateTime Period_End;
+    private void SetDateTime(DateTime first, DateTime second)
+    {
+        Period_Begin = first;
+        Period_End = second;
+    }
 }

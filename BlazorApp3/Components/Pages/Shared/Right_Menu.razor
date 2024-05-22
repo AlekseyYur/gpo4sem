@@ -3,6 +3,9 @@
 @using BlazorApp3.Model
 @using BlazorApp3.Model.Operation
 @using BlazorApp3.Model.Categories
+@using Microsoft.AspNetCore.Components.Web
+	
+@rendermode RenderMode.InteractiveServer
 <div class="right_menu">
     <div class="right_menu__container">
         <div class="right_menu__list-label">
@@ -11,7 +14,7 @@
         <div class="right_menu__list-items">
             @foreach(Purchase item in UserStorage.CurrentUser.Purchases)
                 {
-            <div  id =""class="right_menu__list-item">
+                <button  @onclick="e=>setItem(item)" class="right_menu__list-item">
                 
                     <div   class="right_menu__list-item-name">
                         @item.Shop_Name
@@ -22,7 +25,7 @@
                     </div>
                
                 
-            </div>
+            </button>
             }
         </div>
 
@@ -30,5 +33,11 @@
 </div>
 
 @code {
+    private void setItem(Purchase item)
+    {
+        UserStorage.currentPurchase = item;
+        
+
+    }
 
 }

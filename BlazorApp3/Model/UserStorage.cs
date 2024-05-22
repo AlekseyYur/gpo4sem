@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using BlazorApp3.Model.Categories;
+using BlazorApp3.Model.Operation;
 
 namespace BlazorApp3.Model
 {
@@ -10,6 +11,8 @@ namespace BlazorApp3.Model
 
 		public static ApplicationUser CurrentUser {  get { return _currentUser; }  set { _currentUser = value; } }
 		public static List<ApplicationUser>  Users { get { return _users; }  set { _users = value; } }
+
+		public static Purchase currentPurchase { get; set; }
 
 		/// <summary>
 		/// Проверяет траты пользователя по данной категории и сообщает, если траты выходят за рамки
