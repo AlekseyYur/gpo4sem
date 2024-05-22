@@ -118,8 +118,8 @@ h1:focus {
     font-size: 30px;
 }
     .right_menu__list-item-price {
-        position:relative;
-        right:0;
+        position:absolute;
+        right:50px;
     }
 .right_menu__list-item-name {
     position: relative;
@@ -236,6 +236,12 @@ h1:focus {
     background-color: #4ff09d86;
     margin: 20px;
     position: absolute;
+    display:flex;
+    flex-direction:column;
+    flex-wrap:wrap;
+    gap:40px;
+    top:20px;
+    padding:20px;
     -ms-flex-item-align: center;
     align-self: center;
     height: 213px;
@@ -308,3 +314,8 @@ h1:focus {
     color: red;
 }
 
+.bottom_menu__buy-text-info {
+    font-weight: 400;
+    font-size: 30px;
+    color: #A66508;
+}
