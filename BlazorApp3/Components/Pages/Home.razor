@@ -1,22 +1,293 @@
 ﻿@page "/"
 @using BlazorApp3.Components.Pages.Shared
-
+@using System.Data;
+@using BlazorBootstrap;
+@using BlazorApp3.Model
+@using BlazorApp3.Model.Operation
+@using BlazorApp3.Model.Categories
+@rendermode RenderMode.InteractiveServer
 <div class="main">
 	
 	@if (UserStorage.CurrentUser != null)
 	{
 		
-		<Left_Menu />
-		<div class="center-menu">
-			<Center_Menu />
-		</div>
-		<Bottom_Menu />
-		<Right_Menu />
+		@* <left_menu />
+		
+		<bottom_menu />
+		<right_menu /> *@
+        <div class="left_menu">
+            <div class="left_menu__cube_button-container">
+                <button class="left_menu__cube_button">
+                    <a href="#" class="left_menu__link_button">
+                        <svg class="left_menu__cube_button_icon">
+                        </svg>
+                    </a>
+                </button>
+                <button class="left_menu__cube_button">
+                    <a href="#" class="left_menu__link_button">
+                        <svg class="left_menu__cube_button_icon">
+                        </svg>
+                    </a>
+                </button>
+            </div>
+
+            <div class="left_menu__button-container">
+                <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.UtcNow.AddDays(-1),DateTime.UtcNow) ">
+                    За день
+                </button>
+
+                <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.UtcNow.AddDays(-7),DateTime.UtcNow)">
+                    За неделю
+                </button>
+
+                <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.UtcNow.AddDays(-30),DateTime.UtcNow)">
+                    За месяц
+                </button>
+
+                <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.UtcNow.AddDays(-365),DateTime.UtcNow)">
+                    За год
+                </button>
+
+                <button class="left_menu__period_button" @onclick="e=> SetDateTime(DateTime.MinValue,DateTime.MaxValue)">
+                    За все время
+                </button>
+            </div>
+        </div>
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////// CENTER MENU
+        
+        <div class="center-menu">
+            <div class="Center-menu">
+                @if (UserStorage.CurrentUser != null)
+                {
+
+                    <div class="Chart-container">
+                        <PieChart @ref="PieChart" Width="500" />
+                        <div class="Chart-container__list">
+                            @foreach (Category x in GetCategories())
+                            {
+                                <div class="Chart-container__list-member"> @GetTotal(x) Rub </div>
+
+                            }
+                            @if (UserStorage.CurrentUser.Purchase_Limit > UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+                            {
+                                <div class="Chart-container__list-member"> @(UserStorage.CurrentUser.Purchase_Limit - UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue)) Rub </div>
+                            }
+                        </div>
+
+                    </div>
+                    @if (UserStorage.CurrentUser.Purchase_Limit > UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+                    {
+                        <div class=" total">
+                            <div class="amount">@UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue) </div>
+                            <div class="limit">/ @UserStorage.CurrentUser.Purchase_Limit</div>
+                        </div>
+                    }
+                    @if (UserStorage.CurrentUser.Purchase_Limit < UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+                    {
+                        <div class=" total">
+                            <div class="amountRED">@UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue) </div>
+                            <div class="limit">/ @UserStorage.CurrentUser.Purchase_Limit</div>
+                        </div>
+                        <div> Вы превысили лимит по расходам!</div>
+                    }
+
+                }
+            </div>
+        </div>
+        //////////////////////////////////////////////////////////////////////////////////////////////////////// CENTER MENU
+
+
+        <div class="bottom_menu">
+            <div class="bottom_menu__buy-info">
+                Информация о покупке
+            </div>
+            <div class="bottom_menu__buy-text">
+                @if(_currentItem!=null){
+                <div class ="bottom_menu__buy-text-name">Магазин:@_currentItem.Shop_Name</div>
+                <div class="bottom_menu__buy-text-price">Магазин:@_currentItem.Price</div>
+                <div class="bottom_menu__buy-text-category">Магазин:@_currentItem.Category</div>
+                <div class="bottom_menu__buy-text-Data">Магазин:@_currentItem.DateTime</div>
+                }
+            </div>
+        </div>
+
+
+
+        <div class="right_menu">
+            <div class="right_menu__container">
+                <div class="right_menu__list-label">
+                    Список Покупок
+                </div>
+                <div class="right_menu__list-items">
+                    @foreach (Purchase item in UserStorage.CurrentUser.Purchases)
+                    {
+                        if (item.DateTime > _period_Begin & item.DateTime < _period_End)
+                        {
+                        <button @onclick="e=>setItem(item)" class="right_menu__list-item">
+
+                            <div class="right_menu__list-item-name">
+                                @item.Shop_Name
+                            </div>
+
+                            <div class="right_menu__list-item-price">
+                                @item.SPrice
+                            </div>
+
+
+                        </button>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+     
 	}
 	
 </div>
-
 @code{
+    private DateTime _period_Begin = DateTime.MinValue;
+    private DateTime _period_End = DateTime.MaxValue;
+    private void SetDateTime(DateTime first, DateTime second)
+    {
+        _period_Begin = first;
+        _period_End = second;
+    }
+    private static Purchase _currentItem;
+    private void setItem(Purchase item)
+    {
+        _currentItem = item;
+
+    }
+    private PieChart PieChart = default!;
+    private PieChartOptions pieChartOptions = default!;
+    private ChartData chartData = default!;
+    private string[]? backgroundColors;
+    int datala = 0;
+    List<IChartDataset> datasets = new List<IChartDataset>();
+
+    protected override void OnInitialized()
+    {
+        if (UserStorage.CurrentUser != null)
+        {
+
+            backgroundColors = ColorBuilder.CategoricalTwelveColors;
+
+            List<string> temp_list = new();
+            foreach (Category item in GetCategories())
+            {
+                datala += 1;
+                string temp2 = (string)(Enum.GetName(item));
+                temp_list.Add(temp2);
+
+            }
+            if (UserStorage.CurrentUser.Purchase_Limit > UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+            {
+                temp_list.Add("Left");
+            }
+            datasets.Add(new PieChartDataset() { Label = "", Data = GetDataset(), BackgroundColor = GetRandomBackgroundColors() });
 
 
+
+            chartData = new ChartData { Labels = temp_list, Datasets = datasets };
+
+            pieChartOptions = new();
+            pieChartOptions.Responsive = true;
+            pieChartOptions.Plugins.Title.Text = "Расходы";
+            pieChartOptions.Plugins.Title.Display = true;
+            pieChartOptions.Plugins.Legend.Position = "right";
+
+        }
+
+
+    }
+    private List<double> GetDataset()
+    {
+        var data = new List<double>();
+        double temp = 0;
+        foreach (Category cat in Enum.GetValues(typeof(Category)))
+        {
+            foreach (Purchase item in UserStorage.CurrentUser.Purchases)
+            {
+                if (item.Category == cat & item.DateTime > _period_Begin & item.DateTime < _period_End)
+                {
+                    temp += item.Price;
+                }
+            }
+            data.Add(temp);
+            temp = 0;
+        }
+        if (UserStorage.CurrentUser.Purchase_Limit > UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+        {
+            data.Add(UserStorage.CurrentUser.Purchase_Limit - UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue));
+        }
+        return data;
+    }
+
+    private List<string> GetRandomBackgroundColors()
+    {
+        var colors = new List<string>();
+        for (var index = 0; index < datala; index++)
+        {
+            colors.Add(backgroundColors![index]);
+        }
+        if (UserStorage.CurrentUser.Purchase_Limit > UserStorage.CurrentUser.Purchase_Amount(DateTime.MinValue, DateTime.MaxValue))
+        {
+            colors.Add("Grey");
+        }
+        return colors;
+    }
+    private float GetTotal(Category cat)
+    {
+        if (UserStorage.CurrentUser != null)
+        {
+            float temp = 0;
+            foreach (Purchase item in UserStorage.CurrentUser.Purchases)
+            {
+                if (item.Category == cat & item.DateTime > _period_Begin & item.DateTime < _period_End)
+                {
+                    temp += item.Price;
+                }
+            }
+            return temp;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender & UserStorage.CurrentUser != null)
+        {
+            await PieChart.InitializeAsync(chartData, pieChartOptions);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+    private List<Category> GetCategories()
+    {
+        List<Category> cats = new();
+        foreach (Category cat in Enum.GetValues(typeof(Category)))
+        {
+            foreach (Purchase item in UserStorage.CurrentUser.Purchases)
+            {
+                if (item.Category == cat & !cats.Exists(x => x == item.Category) & item.DateTime>_period_Begin & item.DateTime<_period_End)
+                {
+                    cats.Add(item.Category);
+                }
+            }
+        }
+
+        return cats;
+
+
+    }
 }
