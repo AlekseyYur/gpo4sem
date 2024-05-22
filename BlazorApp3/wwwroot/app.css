@@ -94,7 +94,7 @@ h1:focus {
 
 .right_menu__list-item {
     width: 407px;
-
+    border:none;
     height: 47px;
     display: -webkit-box;
     display: -ms-flexbox;
