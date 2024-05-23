@@ -32,7 +32,7 @@
 
 	protected async override Task OnInitializedAsync()
 	{
-		today = DateTime.Today;
+		today = DateTime.UtcNow;
 		MounthAgo = today.AddMonths(-1);
 
 	}
