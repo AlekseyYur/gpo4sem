@@ -6,8 +6,8 @@
 
 <InputSelect @bind-Value:get="choice"@bind-Value:set="SetSelectedOperation">
     <option value=""></option>
-    <option value="1">Purchase</option>
-    <option value="2">Accrual</option>
+    <option value="1">Траты</option>
+    <option value="2">Пополнение</option>
 </InputSelect>
 @if (choice == 1)
 {
@@ -22,16 +22,16 @@
             </InputSelect>
             <EditForm Model="newPurchase" OnValidSubmit="addOperaion">
                 <div class="form-group">
-                    <label>Name:</label>
+                    <label>Название:</label>
                     <InputText class="form-control" @bind-Value="newPurchase.Shop_Name" />
                 </div>
                 <div class="form-group">
                     \
-                    <label>Cost:</label>
+                    <label>Сумма:</label>
                     <InputText class="form-control" @bind-Value="newPurchase.SPrice" />
                 </div>
 
-                <button type="submit"> Add</button>
+                <button type="submit"> Добавить</button>
 
             </EditForm>
             <div class="col">
@@ -49,15 +49,15 @@
         <div class="col">
             <EditForm Model="newAccrual" OnValidSubmit="addOperaion">
                 <div class="form-group">
-                    <label>From Who:</label>
+                    <label>Откуда:</label>
                     <InputText class="form-control" @bind-Value=" newAccrual.From" />
                 </div>
                 <div class="form-group">
                     
-                    <label>Cost:</label>
+                    <label>Сумма:</label>
                     <InputText class="form-control" @bind-Value=" newAccrual.SPrice" />
                 </div>
-                <button type="submit"> Add</button>
+                <button type="submit"> Добавить</button>
 
             </EditForm>
         </div>

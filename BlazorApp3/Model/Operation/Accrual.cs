@@ -29,6 +29,17 @@
 
             _datetime = DateTime.Now;
         }
+
+        public Accrual(string sender, float price, DateTime date)
+        {
+            _id = _id_counter;
+            _id_counter++;
+            _price = price;
+            _from = sender;
+
+            _datetime = date;
+        }
+
         public Accrual()
         {
 
