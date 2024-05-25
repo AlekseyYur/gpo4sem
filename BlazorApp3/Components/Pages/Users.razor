@@ -19,6 +19,9 @@
 				<label>Login:</label>
 				<InputText class="form-control" @bind-Value="newUser!.Login" />
 			</div>
+			<div>
+				<InputCheckbox @bind-Value=isRandom /><label>Random user</label>				
+			</div>
 			<button type="submit">Save</button>
 		</EditForm>
 	</div>
@@ -29,6 +32,7 @@
 		}
 	</div>
 </div>
+
 
 <InputSelect   @bind-Value:get="login" @bind-Value:set="SetSelected"  >
 	<option value=""></option>
@@ -50,6 +54,8 @@
 	string login = null;
 	private UserList List;
 
+	bool isRandom = false;
+
 	//Сообщение об ошибке
 	string message = String.Empty;
 	string cssClass = String.Empty;
@@ -61,6 +67,7 @@
 			login = UserStorage.CurrentUser.Login;
 		}
 	}
+
 	void addUser()
 	{
 		//Проверка на повторение
@@ -79,10 +86,19 @@
 
 
 		Console.WriteLine(newUser.Login);
-		UserStorage.Users.Add(new ApplicationUser(newUser.Login));
+
+		if (isRandom)
+		{
+			UserStorage.Users.Add(RandomUser.NewUser(newUser.Login));
+		}
+		else
+		{
+			UserStorage.Users.Add(new ApplicationUser(newUser.Login));
+		}
 		StateHasChanged();
 		List.Refresh();
 	}
+
 	void SetSelected(string value)
 	{
 		if (value != "" & UserStorage.Users.Count != 0)

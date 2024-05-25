@@ -46,6 +46,17 @@ namespace BlazorApp3.Model.Operation
             _category = category;
             _datetime = DateTime.UtcNow;
         }
+
+        public Purchase(string shop_name, float price, Category category, DateTime date)
+        {
+            _id = _id_counter;
+            _id_counter++;
+            Price = price;
+            Shop_Name = shop_name;
+            _category = category;
+            _datetime = date;
+        }
+
         public Purchase()
         {
             _datetime = DateTime.UtcNow;
