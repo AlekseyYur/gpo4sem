@@ -51,6 +51,7 @@ h1:focus {
     border-color: #929292;
 }
 .right_menu {
+   
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -68,9 +69,12 @@ h1:focus {
 .right_menu__container {
     background-color: #4ff09d86;
     border: 0.5px;
+    display:flex;
+    flex-direction:column;
+        
     border-color: #FFB852;
     width: 456px;
-    height: 1029px;
+    height: 960px;
     -ms-flex-item-align: center;
     align-self: center;
 }
@@ -85,7 +89,7 @@ h1:focus {
     height: 57px;
     position: relative;
     background-color: #48F089;
-    right: 20px;
+    
     color: #A66508;
     font-weight: 600;
     font-size: 30px;
@@ -94,7 +98,9 @@ h1:focus {
 
 .right_menu__list-item {
     width: 407px;
-    border:none;
+    position: relative;
+    right: 30px;
+    border: none;
     height: 47px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -105,28 +111,32 @@ h1:focus {
     flex-direction: row;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    
     margin: 10px 25px;
     background-color: rgba(0, 0, 0, 0.04);
+    transition: background-color 0.6s;
 }
+    .right_menu__list-item:hover {
+        background-color: rgba(0, 0, 0, 0.07);
+    }
 
-.right_menu__list-item-name,
-.right_menu__list-item-price {
+
+    .right_menu__list-item-name, .right_menu__list-item-price {
     color: #A66508;
     padding: 5px 10px;
     font-weight: 600;
     font-size: 30px;
 }
-    .right_menu__list-item-price {
-        position:absolute;
-        right:50px;
-    }
+.right_menu__list-item-price {
+    position:absolute;
+    right:0;
+}
 .right_menu__list-item-name {
     position: relative;
    
 }
 
     .left_menu {
+        
         -ms-flex-item-align: right;
         align-self: right;
         width: 154px;
@@ -165,12 +175,17 @@ h1:focus {
     background-color: #48F089;
     border-color: #84F048;
     border: 1px;
+    transition: background-color 0.6s
 }
-
-.left_menu__cube_button_icon {
-    width: 52px;
-    height: 52px;
-}
+    .left_menu__cube_button:hover {
+        background-color: #4DFF92;
+    }
+    .left_menu__cube_button_icon {
+        position: relative;
+        right: 6px;
+        width: 52px;
+        height: 52px;
+    }
 
 .left_menu__button-container {
     z-index: 2;
@@ -196,24 +211,46 @@ h1:focus {
     width: 137px;
     z-index: 2;
     left: 9px;
+   
+    transition: background-color 0.6s,transform 0.7s;
 }
+    .left_menu__period_button:hover {
+        transform: translateX(10px);
+        background-color: #4DFF92;
+    }
 
-.bottom_menu {
+
+.left_menu__period_button_choosed {
+    background-color: #48F089;
     position: relative;
-    bottom: 0;
-    height: 255px;
-    width: 1253px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    top: 120px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    background-color: #61c4b7;
-    left: 9px;
+    border: none;
+    color: #A66508;
+    font-weight: 600;
+    height: 24px;
+    width: 137px;
+    z-index: 2;
+    left: 19px;
+    transition: background-color 0.6s;
 }
+    .left_menu__period_button_choosed:hover {
+        background-color: #4DFF92;
+    }
+    .bottom_menu {
+        position: relative;
+        bottom: 0;
+        height: 255px;
+        width: 1253px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        top: 120px;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background-color: #61c4b7;
+        left: 9px;
+    }
 
 .bottom_menu__buy-info {
     -webkit-box-sizing: border-box;
@@ -240,7 +277,8 @@ h1:focus {
     flex-direction:column;
     flex-wrap:wrap;
     gap:40px;
-    top:20px;
+    top:25px;
+    bottom:10px;
     padding:20px;
     -ms-flex-item-align: center;
     align-self: center;
@@ -254,33 +292,34 @@ h1:focus {
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-   
+    overflow: hidden;
     flex-direction: column;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     width: 1920px;
-    height: 1080px;
+    height: 1000px;
     background-color: #DCF1DD;
-    position:relative;
-    left:-20px;
-    zoom:90%;
-   
+    position: relative;
+    left: -20px;
+    zoom: 90%;
 }
-.center-menu{
-    position:relative;
-    top:60px;
-    width:600px;
-    height:600px;
- 
-    left:250px;
+.center-menu {
+    position: relative;
+    top: 60px;
+    position: relative;
     
+    height: 600px;
+    left: 250px;
 }
 .Center-menu {
     display: flex;
     flex-direction: column;
     height: 600px;
-    width: 600px;
+    position:relative;
+    right:250px;
+    align-items: center;
     display: flex;
     flex-direction: column;
+    zoom:110%;
 }
 
 .Chart-container {
@@ -288,6 +327,7 @@ h1:focus {
     flex-direction: row;
     align-self: center;
     position: relative;
+    right: 50px;
 }
 
 .Chart-container__list {
@@ -300,7 +340,9 @@ h1:focus {
 }
 
 .Chart-container__list-member {
+    display: flex;
     height: 10px;
+    
 }
 
 .total {
@@ -315,7 +357,45 @@ h1:focus {
 }
 
 .bottom_menu__buy-text-info {
-    font-weight: 400;
+    padding:10px;
+    font-weight: 600;
     font-size: 30px;
     color: #A66508;
 }
+
+
+
+ul {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 860px;
+    max-height: 1069px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.right_menu__button-container {
+    display: flex;
+    flex-direction: row;
+   
+    height: 30px;
+    gap: 50px;
+    font-weight: 600;
+    font-size: 20px;
+    align-self: center;
+    margin:5px;
+}
+.right_menu__button_choosed {
+    padding: 1px;
+    border: 1px solid #A66508;
+    background-color: rgba(0, 0, 0, 0.04);
+    color: #A66508;
+}
+.right_menu__button {
+    color: #A66508;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.2s;
+}
+    .right_menu__button:hover {
+        background-color: rgba(0, 0, 0, 0.04)
+    }
